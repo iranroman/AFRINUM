@@ -38,7 +38,6 @@ if __name__ == "__main__":
     years_float = np.array(years_float) + np.array(years_diff)
 
 
-    '''
     means = []
     stds = []
     years = []
@@ -67,7 +66,7 @@ if __name__ == "__main__":
         most_common_note = np.argmax(hists[-1])+2800
 
         # limiting to one octave around the most common note
-        g_cents = np.array([c for c in g_cents if c>(most_common_note-699) and c<(most_common_note+699)])
+        g_cents = np.array([c for c in g_cents if c>(most_common_note-600) and c<(most_common_note+600])
         g_cents = g_cents[...,np.newaxis]
 
         # find the optimal number of F0 components and their associated mean and covariance
@@ -109,7 +108,6 @@ if __name__ == "__main__":
     np.save('scores.npy',np.array(scores))
     np.save('covariances.npy',np.array(covariances))
     np.save('years.npy',np.array(years))
-    '''
 
     # code to load the pre-computed components
     comps = np.load('comps.npy', allow_pickle=True)
@@ -127,7 +125,7 @@ if __name__ == "__main__":
 
 
     res_means = linregress(years_float, covariances)
-    plt.figure(figsize=(10,3))
+    plt.figure(figsize=(10,5))
     plt.subplot(1,2,1)
     plt.scatter(years_float,covariances,color='k')
     plt.plot(years_float, res_means.intercept + res_means.slope*years_float, 'r')
